@@ -32,9 +32,10 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   var _isEditMode = false;
   double _width;
 
-  String _day="";
-  String _month="";
-  String _year="";
+  String _day = "";
+  String _month = "";
+  String _year = "";
+
 
   //for image width and height
   double _maxWidth = 500;
@@ -51,11 +52,24 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
     setData();
   }
 
-  void setData() {
+  void setData() async{
+    await Future.delayed(Duration(milliseconds: 300));
     _firstNameController.text = widget.doctorContact.firstName;
     _lastNameController.text = widget.doctorContact.lastName;
     _contactController.text = widget.doctorContact.primaryContactNo;
     _genderController.text = "";
+    var dob=widget.doctorContact.dob;
+
+    if(dob!=null)
+      {
+        var splitData=dob.split("/");
+        _day=splitData[0];
+        _month=splitData[1];
+        _year=splitData[2];
+      }
+    setState(() {
+
+    });
   }
 
 //  void fetchData() async {
@@ -120,19 +134,21 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   }
 
   void editProfile() async {
-    if(_isEditMode)
-      {
-        //update data locally
-      }
+    if (_isEditMode) {
+      //update data locally
+      _updateData();
+    }
     setState(() {
       _isEditMode = !_isEditMode;
     });
   }
 
-  void _updateData()async
-  {
+  void _updateData() async {
     _homeViewModel.getLoading();
-
+    widget.doctorContact.firstName = _firstNameController.text;
+    widget.doctorContact.lastName = _lastNameController.text;
+    widget.doctorContact.dob="$_day/$_month/$_year";
+    _homeViewModel.updateDoctorInformation(widget.doctorContact);
   }
 
   Widget _getTopWidget() => Container(
@@ -287,7 +303,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
                   style: TextStyle(color: AppColors.kBlack, fontSize: 16),
                   controller: controller,
                   autofocus: false,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
                   key: Key('EnterPhone-TextFormField'),
                   decoration: InputDecoration(
                     isDense: false,
@@ -300,7 +316,6 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
           ),
         ),
       );
-
 
   Widget _getEditProfileButton() => RaisedButton(
         onPressed: editProfile,
@@ -317,11 +332,10 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
 
   Widget _getBox({IconData icon, String text, String label}) => Expanded(
         child: InkWell(
-          onTap: (){
-            if(label=="DAY"||label=="MONTH" || label=="YEAR")
-              {
-                _showDatePicker();
-              }
+          onTap: () {
+            if (label == "DAY" || label == "MONTH" || label == "YEAR") {
+              _showDatePicker();
+            }
           },
           child: Container(
               color: AppColors.kWhite,
@@ -363,16 +377,15 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
         ),
       );
 
-  void _showDatePicker()
-  {
+  void _showDatePicker() {
     showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        //which date will display when user open the picker
-        firstDate: DateTime(1950),
-        //what will be the previous supported year in picker
-        lastDate: DateTime
-            .now()) //what will be the up to supported date in picker
+            context: context,
+            initialDate: DateTime.now(),
+            //which date will display when user open the picker
+            firstDate: DateTime(1950),
+            //what will be the previous supported year in picker
+            lastDate: DateTime
+                .now()) //what will be the up to supported date in picker
         .then((pickedDate) {
       //then usually do the future job
       if (pickedDate == null) {
@@ -381,12 +394,13 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
       }
 
       setState(() {
-        _day=pickedDate.day.toString();
-        _month=pickedDate.month.toString();
-        _year=pickedDate.year.toString();
+        _day = pickedDate.day.toString();
+        _month = pickedDate.month.toString();
+        _year = pickedDate.year.toString();
       });
     });
   }
+
   void showActionSheet() {
     final act = CupertinoActionSheet(
         actions: <Widget>[

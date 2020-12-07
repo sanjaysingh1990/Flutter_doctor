@@ -24,7 +24,7 @@ class HomeViewModel with ChangeNotifier {
       return completer.future;
     }
     ContactsResponse homeResponse =
-        new ContactsResponse.fromJson(localDataList);
+    new ContactsResponse.fromJson(localDataList);
     print("response ${homeResponse}");
     completer.complete(homeResponse);
     return completer.future;
@@ -33,14 +33,15 @@ class HomeViewModel with ChangeNotifier {
 
   Future<dynamic> updateDoctorInformation(DoctorContact doctorContact) async {
     Completer<dynamic> completer = new Completer<dynamic>();
-    var result = await DatabaseHelper.instance.updateDoctorInformation(doctorContact);
-    print("update result $result")
-;    completer.complete(result);
+    var result = await DatabaseHelper.instance.updateDoctorInformation(
+        doctorContact);
+    print("update result $result");
+    completer.complete(result);
     return completer.future;
   }
 
-  Future<dynamic> getDoctorsList(
-      BuildContext context, bool isNetworkAvailable) async {
+  Future<dynamic> getDoctorsList(BuildContext context,
+      bool isNetworkAvailable) async {
     Completer<dynamic> completer = new Completer<dynamic>();
     var localDataResponse = await getDoctorsListLocal();
 
@@ -57,7 +58,7 @@ class HomeViewModel with ChangeNotifier {
     }
 
     var response =
-        await APIHandler.get(context: context, url: APIs.getContacts);
+    await APIHandler.get(context: context, url: APIs.getContacts);
     hideLoader();
     if (response is APIError) {
       completer.complete(response);
@@ -87,7 +88,7 @@ class HomeViewModel with ChangeNotifier {
       for (var data in homeResponse.data) {
         try {
           //update record here
-        ///  var id = await DatabaseHelper.instance.insert(data);
+          ///  var id = await DatabaseHelper.instance.insert(data);
           //print(id);
         } catch (ex) {
           //print("insert errro ${ex.toString()}");
