@@ -66,13 +66,13 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
-    var res = await db.query(table, orderBy: "$columnId DESC");
-    return res;
+    var res = await db.query(table);
+    return res.toList();
   }
 
   Future<int> delete(int id) async {
     Database db = await instance.database;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(table, where: '$id = ?', whereArgs: [id]);
   }
 
   Future<void> clearTable() async {

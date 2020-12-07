@@ -48,7 +48,7 @@ class DoctorContact {
     data['first_name'] = this.firstName;
     data['last_name'] = this.lastName;
     data['profile_pic'] = this.profilePic;
-    data['favorite'] = this.favorite;
+    data['favorite'] = (this.favorite)?1:0;
     data['primary_contact_no'] = this.primaryContactNo;
     data['rating'] = this.rating;
     data['email_address'] = this.emailAddress;
