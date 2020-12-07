@@ -228,10 +228,16 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
   }
 
   signIn() {
+    if(!checkBoxValue)
+      {
+        _showSnackBar("Please accept the term and conditions");
+        return;
+      }
     var code = textEditingController.text;
     if (code.length != 6) {
       _showSnackBar("Invalid OTP");
     }
+    print("$code");
     Provider.of<PhoneAuthDataProvider>(context, listen: false)
         .verifyOTPAndLogin(smsCode: code);
   }
@@ -255,8 +261,13 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
     _showSnackBar(
         "${Provider.of<PhoneAuthDataProvider>(context, listen: false).message}");
     await Future.delayed(Duration(seconds: 1));
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) => DoctorPage()));
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => DoctorPage()),
+        ModalRoute.withName('/')
+    );
+
   }
 
   onFailed() {

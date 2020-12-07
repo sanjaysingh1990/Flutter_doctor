@@ -78,7 +78,15 @@ class _DoctorPagePageState extends State<DoctorPage> {
     _homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: AppColors.kWhite,
+        title: Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+        Image.asset(AssetStrings.logo1,width: 100,height: 120,),
+        Image.asset(AssetStrings.logo,width: 100,height: 120),
+
+      ],),),
       body: Stack(
         children: [
           Padding(
@@ -160,7 +168,7 @@ class DoctorItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              doctorImage(doctorContact.profilePic),
+              doctorImage(doctorContact.profilePic,50),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
               ),
@@ -173,19 +181,19 @@ class DoctorItemWidget extends StatelessWidget {
                       style: TextStyle(
                           //fontFamily: AssetStrings.giloryExteraBoldStyle,
                           color: Colors.blue,
-                          fontSize: 16)),
+                          fontSize: 16,fontFamily: AssetStrings.robotoBold)),
                   getVerticalSpace(5),
                   Text("${doctorContact.specialization.toUpperCase()}",
                       style: TextStyle(
                           //fontFamily: AssetStrings.giloryExteraBoldStyle,
                           color: Colors.blue,
-                          fontSize: 14)),
+                          fontSize: 14,fontFamily: AssetStrings.robotoRegular)),
                   getVerticalSpace(5),
                   Text(
                     "${doctorContact.description}",
                     style: TextStyle(
                         //fontFamily: AssetStrings.giloryExteraBoldStyle,
-                        fontSize: 12),
+                        fontSize: 12,fontFamily: AssetStrings.robotoRegular),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   )

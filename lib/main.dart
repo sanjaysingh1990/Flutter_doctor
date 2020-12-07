@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: PhoneAuthGetPhone(),
+        home: DoctorPage(),
         debugShowCheckedModeBanner: false,
       ),
     );

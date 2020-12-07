@@ -254,10 +254,10 @@ Widget getCachedNetworkImage(
   );
 }
 
-Widget doctorImage(String url) {
+Widget doctorImage(String url,double size) {
   return Container(
-    width: 60.0,
-    height: 60.0,
+    width: size,
+    height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: Colors.grey,

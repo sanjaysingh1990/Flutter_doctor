@@ -126,7 +126,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
                             showActionSheet();
                           },
                           child: (_imageFile == null)
-                              ? doctorImage(widget.doctorContact.profilePic)
+                              ? doctorImage(widget.doctorContact.profilePic,70)
                               : doctorImageLocal(_imageFile)))),
             ),
           ],
