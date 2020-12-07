@@ -11,6 +11,7 @@ class DoctorContact {
   String description;
   String specialization;
   String languagesKnown;
+  String dob;
 
   DoctorContact(
       {this.id,
@@ -55,6 +56,7 @@ class DoctorContact {
     data['description'] = this.description;
     data['specialization'] = this.specialization;
     data['languagesKnown'] = this.languagesKnown;
+    data['dob'] = this.dob;
     return data;
   }
 }
