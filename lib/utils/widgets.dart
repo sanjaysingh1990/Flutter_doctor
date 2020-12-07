@@ -272,3 +272,47 @@ Widget doctorImageLocal(PickedFile _imageFile) {
     ),
   );
 }
+
+// Checks Internet connection
+Future<bool> hasInternetConnection({
+  @required BuildContext context,
+  bool mounted,
+  @required Function onSuccess,
+  @required Function onFail,
+  bool canShowAlert = true,
+}) async {
+  try {
+    final result = await InternetAddress.lookup('google.com')
+        .timeout(const Duration(seconds: 5));
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      onSuccess();
+      return true;
+    } else {
+      if (canShowAlert) {
+        onFail();
+        /* showAlert(
+          context: context,
+          titleText: Localization.of(context).trans(LocalizationValues.error),
+          message: Messages.noInternetError,
+          actionCallbacks: {
+            Localization.of(context).trans(LocalizationValues.ok): () {
+              return false;
+            }
+          },
+        );*/
+      }
+    }
+  } catch (_) {
+    onFail();
+    /*  showAlert(
+        context: context,
+        titleText: Localization.of(context).trans(LocalizationValues.error),
+        message: Messages.noInternetError,
+        actionCallbacks: {
+          Localization.of(context).trans(LocalizationValues.ok): () {
+            return false;
+          }
+        });*/
+  }
+  return false;
+}

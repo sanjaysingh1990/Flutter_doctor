@@ -51,7 +51,7 @@ class DatabaseHelper {
         "$rating TEXT,"
         "$emailAddress TEXT,"
         "$qualification TEXT,"
-        "$description TEXT"
+        "$description TEXT,"
         "$specialization TEXT,"
         "$languageKnown TEXT,"
         "$dob TEXT"
@@ -78,5 +78,10 @@ class DatabaseHelper {
   Future<void> clearTable() async {
     Database db = await instance.database;
     return await db.rawQuery("DELETE FROM $table");
+  }
+
+  Future<int> updateDoctorInformation(DoctorContact doctorContact) async {
+    Database db = await instance.database;
+    return await db.update("$table", doctorContact.toJson(), where: "id = ?", whereArgs: [doctorContact.id]);
   }
 }

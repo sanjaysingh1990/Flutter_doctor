@@ -32,7 +32,15 @@ class DoctorContact {
     firstName = json['first_name'];
     lastName = json['last_name'];
     profilePic = json['profile_pic'];
-    favorite = json['favorite'];
+    var fav= json['favorite'];
+    if(fav==1 || fav==0)
+      {
+        favorite =(fav==1)?true:false;
+      }
+    else{
+      favorite =json['favorite'];
+    }
+
     primaryContactNo = json['primary_contact_no'];
     rating = json['rating'];
     emailAddress = json['email_address'];

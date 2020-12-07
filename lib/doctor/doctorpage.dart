@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_test/doctordetails/doctordetailspage.dart';
+import 'package:flutter_app_test/localdb/DatabaseHelper.dart';
 import 'package:flutter_app_test/model/apierror.dart';
 import 'package:flutter_app_test/model/doctorcontact.dart';
 import 'package:flutter_app_test/providers/home_view_model.dart';
@@ -32,12 +33,26 @@ class _DoctorPagePageState extends State<DoctorPage> {
 
   void fetchData() async {
     await Future.delayed(Duration(milliseconds: 500));
-    _doctorsList.clear();
     _homeViewModel.setLoading();
-    var response = await _homeViewModel.getDoctorsList(context);
+    //check internet conneciton first
+    bool isNetworkAvaialble = await hasInternetConnection(
+      context: context,
+      mounted: mounted,
+      canShowAlert: true,
+      onFail: () {
+       _showSnackBar(Messages.noInternetError);
+      },
+      onSuccess: () {},
+    );
+
+
+    _doctorsList.clear();
+
+    var response = await _homeViewModel.getDoctorsList(context,isNetworkAvaialble);
     if (response is APIError) {
       _showSnackBar(response.message??Messages.genericError);
     } else {
+
       _doctorsList.addAll(response.data);
       _doctorsList.sort((doctor1, doctor2) => doctor2.rating.compareTo(doctor1.rating)); //sort list by max rating at top
     }

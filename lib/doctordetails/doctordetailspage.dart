@@ -58,16 +58,16 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
     _genderController.text = "";
   }
 
-  void fetchData() async {
-    await Future.delayed(Duration(milliseconds: 500));
-    _notificationList.clear();
-    _homeViewModel.setLoading();
-    var response = await _homeViewModel.getDoctorsList(context);
-    if (response is APIError) {
-    } else {
-      _notificationList.addAll(response.data);
-    }
-  }
+//  void fetchData() async {
+//    await Future.delayed(Duration(milliseconds: 500));
+//    _notificationList.clear();
+//    _homeViewModel.setLoading();
+//    var response = await _homeViewModel.getDoctorsList(context);
+//    if (response is APIError) {
+//    } else {
+//      _notificationList.addAll(response.data);
+//    }
+//  }
 
   VoidCallback callback() {
     Navigator.pop(context);
@@ -120,9 +120,19 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   }
 
   void editProfile() async {
+    if(_isEditMode)
+      {
+        //update data locally
+      }
     setState(() {
-      _isEditMode = true;
+      _isEditMode = !_isEditMode;
     });
+  }
+
+  void _updateData()async
+  {
+    _homeViewModel.getLoading();
+
   }
 
   Widget _getTopWidget() => Container(

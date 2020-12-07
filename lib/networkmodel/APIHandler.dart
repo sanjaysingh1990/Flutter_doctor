@@ -41,7 +41,7 @@ class APIHandler {
   // GET method
   static Future<dynamic> get({
     @required String url,
-    @required BuildContext context,
+     BuildContext context,
     dynamic requestBody,
     Map<String, String> additionalHeaders = const {},
   }) async {
