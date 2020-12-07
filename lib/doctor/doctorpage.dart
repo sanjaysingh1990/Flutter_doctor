@@ -67,6 +67,12 @@ class _DoctorPagePageState extends State<DoctorPage> {
     scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
+  VoidCallback updateCallBack()
+  {
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     _homeViewModel = Provider.of<HomeViewModel>(context);
@@ -85,7 +91,7 @@ class _DoctorPagePageState extends State<DoctorPage> {
                 return InkWell(
                   onTap: (){
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (BuildContext context) => DoctorDetailsPage(doctorContact: data,)));
+                        .push(MaterialPageRoute(builder: (BuildContext context) => DoctorDetailsPage(doctorContact: data,callBackUpdate: updateCallBack,)));
                   },
                   child: DoctorItemWidget(
                       doctorContact: data),

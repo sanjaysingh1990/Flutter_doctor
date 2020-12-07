@@ -15,15 +15,16 @@ import 'package:provider/provider.dart';
 
 class DoctorDetailsPage extends StatefulWidget {
   final DoctorContact doctorContact;
+  final VoidCallback callBackUpdate;
 
-  DoctorDetailsPage({this.doctorContact});
+  DoctorDetailsPage({this.doctorContact,this.callBackUpdate});
 
   _DoctorDetailsPageState createState() => _DoctorDetailsPageState();
 }
 
 class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   HomeViewModel _homeViewModel;
-  var _notificationList = List<dynamic>();
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
@@ -43,7 +44,8 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
 
   //for picking media
   PickedFile _imageFile;
-
+  final scaffoldKey =
+  GlobalKey<ScaffoldState>(debugLabel: "doctor-details-page");
   @override
   void initState() {
     // TODO: implement initState
@@ -93,6 +95,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
 
     _homeViewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: AppColors.kPrimary,
       body: SafeArea(
         child: Stack(
@@ -149,7 +152,19 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
     widget.doctorContact.lastName = _lastNameController.text;
     widget.doctorContact.dob="$_day/$_month/$_year";
     _homeViewModel.updateDoctorInformation(widget.doctorContact);
+    _showSnackBar("Record updated successfully");
+    widget.callBackUpdate(); //update previous screen
   }
+
+  _showSnackBar(String text) {
+    final snackBar = SnackBar(
+      content: Text('$text'),
+      duration: Duration(seconds: 2),
+    );
+//    if (mounted) Scaffold.of(context).showSnackBar(snackBar);
+    scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
 
   Widget _getTopWidget() => Container(
         color: AppColors.kWhite,
@@ -333,7 +348,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   Widget _getBox({IconData icon, String text, String label}) => Expanded(
         child: InkWell(
           onTap: () {
-            if (label == "DAY" || label == "MONTH" || label == "YEAR") {
+            if ((label == "DAY" || label == "MONTH" || label == "YEAR")&&_isEditMode) {
               _showDatePicker();
             }
           },
