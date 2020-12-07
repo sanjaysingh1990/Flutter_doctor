@@ -16,6 +16,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 class PhoneAuthVerify extends StatefulWidget {
+  final String phoneNo;
+  PhoneAuthVerify({@required this.phoneNo});
+
   @override
   _PhoneAuthVerifyState createState() => _PhoneAuthVerifyState();
 }
@@ -24,8 +27,6 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
   double _height;
 
   TextEditingController textEditingController = TextEditingController();
-
-  // ..text = "123456";
 
   StreamController<ErrorAnimationType> errorController;
   var onTapRecognizer;
@@ -55,6 +56,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.phoneNo);
     //  Fetching height & width parameters from the MediaQuery
     //  _logoPadding will be a constant, scaling it according to device's size
     _height = MediaQuery.of(context).size.height;
@@ -170,7 +172,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
           //  Logo: scaling to occupy 2 parts of 10 in the whole height of device
           getVerticalSpace(_height * 0.15),
           PhoneAuthWidgets.getHeading(
-              text: ResString().get("enterphoneheading")),
+              text: ResString().get("enter_code")),
           getVerticalSpace(20),
 
           PinCodeTextField(
@@ -210,7 +212,7 @@ class _PhoneAuthVerifyState extends State<PhoneAuthVerify> {
             },
           ),
 
-          Text(ResString().get("enterphonedesc"),
+          Text(ResString().get("verify_otp")+" ${widget.phoneNo}",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.w400)),
         ],

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_test/utils/AppColors.dart';
+import 'package:flutter_app_test/utils/AssetStrings.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../data_models/country.dart';
@@ -12,7 +13,10 @@ import '../data_models/country.dart';
 class PhoneAuthWidgets {
   static Widget getHeading({String text}) => Text(
         text,
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: AssetStrings.robotoBold),
       );
 }
 
@@ -56,6 +60,8 @@ class PhoneNumberField extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             InkWell(
                 onTap: () {
@@ -63,13 +69,21 @@ class PhoneNumberField extends StatelessWidget {
                 },
                 child: Text("  " + prefix + "  ",
                     style: TextStyle(
-                      fontSize: 18.0,
-                      color: AppColors.kGreen,
-                    ))),
+                        fontSize: 20.0,
+                        color: AppColors.kGreen,
+                        fontFamily: AssetStrings.robotoBold))),
+            Icon(
+              Icons.keyboard_arrow_down,
+              color: AppColors.kGreen,
+              size: 18.0,
+            ),
             SizedBox(width: 8.0),
             Expanded(
               child: TextFormField(
-                style: TextStyle(color: AppColors.kYellow, fontSize: 18),
+                style: TextStyle(
+                    color: AppColors.kYellow,
+                    fontSize: 20,
+                    fontFamily: AssetStrings.robotoBold),
                 controller: controller,
                 autofocus: false,
                 keyboardType: TextInputType.phone,
@@ -82,7 +96,7 @@ class PhoneNumberField extends StatelessWidget {
                       onPressed: () {
                         controller.clear();
                       },
-                      icon: Icon(Icons.clear),
+                      icon: Icon(Icons.clear,color: AppColors.kYellow,),
                     )),
               ),
             ),
@@ -182,7 +196,7 @@ Widget getButton({String text, VoidCallback callback}) {
       padding: const EdgeInsets.all(12.0),
       child: Text(
         text,
-        style: TextStyle(color: AppColors.kWhite, fontSize: 18.0),
+        style: TextStyle(color: AppColors.kWhite, fontSize: 18.0,fontFamily: AssetStrings.robotoBold),
       ),
     ),
     color: AppColors.kGreen,

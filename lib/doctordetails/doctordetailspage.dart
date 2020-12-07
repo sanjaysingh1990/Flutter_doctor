@@ -17,7 +17,7 @@ class DoctorDetailsPage extends StatefulWidget {
   final DoctorContact doctorContact;
   final VoidCallback callBackUpdate;
 
-  DoctorDetailsPage({this.doctorContact,this.callBackUpdate});
+  DoctorDetailsPage({this.doctorContact, this.callBackUpdate});
 
   _DoctorDetailsPageState createState() => _DoctorDetailsPageState();
 }
@@ -37,7 +37,6 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   String _month = "";
   String _year = "";
 
-
   //for image width and height
   double _maxWidth = 500;
   double _maxHeight = 500;
@@ -45,33 +44,33 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   //for picking media
   PickedFile _imageFile;
   final scaffoldKey =
-  GlobalKey<ScaffoldState>(debugLabel: "doctor-details-page");
+      GlobalKey<ScaffoldState>(debugLabel: "doctor-details-page");
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     //  fetchData();
     setData();
+
   }
 
-  void setData() async{
+
+  void setData() async {
     await Future.delayed(Duration(milliseconds: 300));
     _firstNameController.text = widget.doctorContact.firstName;
     _lastNameController.text = widget.doctorContact.lastName;
     _contactController.text = widget.doctorContact.primaryContactNo;
     _genderController.text = "";
-    var dob=widget.doctorContact.dob;
+    var dob = widget.doctorContact.dob;
 
-    if(dob!=null)
-      {
-        var splitData=dob.split("/");
-        _day=splitData[0];
-        _month=splitData[1];
-        _year=splitData[2];
-      }
-    setState(() {
-
-    });
+    if (dob != null) {
+      var splitData = dob.split("/");
+      _day = splitData[0];
+      _month = splitData[1];
+      _year = splitData[2];
+    }
+    setState(() {});
   }
 
 //  void fetchData() async {
@@ -150,7 +149,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
     _homeViewModel.getLoading();
     widget.doctorContact.firstName = _firstNameController.text;
     widget.doctorContact.lastName = _lastNameController.text;
-    widget.doctorContact.dob="$_day/$_month/$_year";
+    widget.doctorContact.dob = "$_day/$_month/$_year";
     _homeViewModel.updateDoctorInformation(widget.doctorContact);
     _showSnackBar("Record updated successfully");
     widget.callBackUpdate(); //update previous screen
@@ -165,7 +164,6 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
     scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
-
   Widget _getTopWidget() => Container(
         color: AppColors.kWhite,
         child: Column(
@@ -175,14 +173,16 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
             getVerticalSpace(40),
             Center(
                 child: Text(
-              "Doctor Name",
-              style: TextStyle(fontSize: 16),
+              "${widget.doctorContact.firstName} ${widget.doctorContact.lastName}",
+              style:
+                  TextStyle(fontSize: 16, fontFamily: AssetStrings.robotoBold),
             )),
+            getVerticalSpace(5),
             Center(
               child: _getEditProfileButton(),
             ),
-            SizedBox(
-              height: 30,
+            getVerticalSpace(
+              30,
             )
           ],
         ),
@@ -348,7 +348,8 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   Widget _getBox({IconData icon, String text, String label}) => Expanded(
         child: InkWell(
           onTap: () {
-            if ((label == "DAY" || label == "MONTH" || label == "YEAR")&&_isEditMode) {
+            if ((label == "DAY" || label == "MONTH" || label == "YEAR") &&
+                _isEditMode) {
               _showDatePicker();
             }
           },

@@ -47,7 +47,7 @@ class _WebViewPagesState extends State<WebViewPages> {
               widget.heading,
               style: TextStyle(
                   fontSize: 22,
-                  fontFamily: AssetStrings.circulerBlackItalicStyle),
+                  fontFamily: AssetStrings.robotoBold),
             )
           ],
         ),

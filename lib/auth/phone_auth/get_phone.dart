@@ -5,6 +5,7 @@ import 'package:flutter_app_test/auth/phone_auth/verify.dart';
 import 'package:flutter_app_test/providers/countries.dart';
 import 'package:flutter_app_test/providers/phone_auth.dart';
 import 'package:flutter_app_test/utils/AppColors.dart';
+import 'package:flutter_app_test/utils/AssetStrings.dart';
 import 'package:flutter_app_test/utils/class%20ResString.dart';
 import 'package:flutter_app_test/utils/constants.dart';
 import 'package:flutter_app_test/utils/widgets.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_app_test/utils/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'select_country.dart';
-
 
 /*
  *  PhoneAuthUI - this file contains whole ui and controllers of ui
@@ -22,27 +22,32 @@ import 'select_country.dart';
  */
 
 class PhoneAuthGetPhone extends StatefulWidget {
-
-
   @override
   _PhoneAuthGetPhoneState createState() => _PhoneAuthGetPhoneState();
 }
 
 class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
-
   double _height;
-
-
+  var countriesProvider;
+   PhoneAuthDataProvider phoneAuthProvider;
 
   final scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: "scaffold-get-phone");
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+ // _setListener();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
-
-    final countriesProvider = Provider.of<CountryProvider>(context);
-    final loader = Provider.of<PhoneAuthDataProvider>(context).loading;
+    phoneAuthProvider =
+        Provider.of<PhoneAuthDataProvider>(context, listen: false);
+    countriesProvider = Provider.of<CountryProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -50,12 +55,16 @@ class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
       backgroundColor: AppColors.kPrimary,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left:24.0,right: 24),
+          padding: const EdgeInsets.only(left: 24.0, right: 24),
           child: Stack(
             children: <Widget>[
-              _getBody(countriesProvider),
-              loader ? Center(child: CircularProgressIndicator()) : SizedBox(),
-              Positioned(bottom: _height * 0.15,left: 0,right: 0,child: getButton(text:"Continue",callback:startPhoneAuth ),)
+              _getBody(),
+              Positioned(
+                bottom: _height * 0.15,
+                left: 0,
+                right: 0,
+                child: getButton(text: "Continue", callback: startPhoneAuth),
+              )
             ],
           ),
         ),
@@ -63,11 +72,11 @@ class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
     );
   }
 
-  Widget _getBody(CountryProvider countriesProvider) => Container(
-    child: countriesProvider.countries.length > 0
-        ? _getColumnBody(countriesProvider)
-        : Center(child: CircularProgressIndicator()),
-  );
+  Widget _getBody() => Container(
+        child: countriesProvider.countries.length > 0
+            ? _getColumnBody()
+            : Center(child: CircularProgressIndicator()),
+      );
 
   //move to select country screen
   VoidCallback callBackSelectCountry() {
@@ -75,26 +84,21 @@ class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
         .push(MaterialPageRoute(builder: (context) => SelectCountry()));
   }
 
-
-
-  Widget _getColumnBody(CountryProvider countriesProvider) => Column(
+  Widget _getColumnBody() => Column(
         children: <Widget>[
           getVerticalSpace(_height * 0.15),
           PhoneAuthWidgets.getHeading(
               text: ResString().get("enterphoneheading")),
           getVerticalSpace(20),
           PhoneNumberField(
-            controller:
-                Provider.of<PhoneAuthDataProvider>(context, listen: false)
-                    .phoneNumberController,
+            controller: phoneAuthProvider.phoneNumberController,
             prefix: countriesProvider.selectedCountry.dialCode ?? "+91",
             callBackCountry: callBackSelectCountry,
           ),
           getVerticalSpace(16),
           Text(ResString().get("enterphonedesc"),
               style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w400)),
-
+                  color: Colors.white, fontFamily: AssetStrings.robotoRegular)),
         ],
       );
 
@@ -107,24 +111,29 @@ class _PhoneAuthGetPhoneState extends State<PhoneAuthGetPhone> {
   }
 
   startPhoneAuth() async {
-    final phoneAuthDataProvider =
-        Provider.of<PhoneAuthDataProvider>(context, listen: false);
-    phoneAuthDataProvider.loading = true;
+    var phoneNo=phoneAuthProvider.phoneNumberController.text;
+    var countryCode= countriesProvider.selectedCountry.dialCode ?? "+91";
+
+    var finalPhoneNo = "$countryCode $phoneNo";
+
+    phoneAuthProvider.loading = true;
     var countryProvider = Provider.of<CountryProvider>(context, listen: false);
-    bool validPhone = await phoneAuthDataProvider.instantiate(
+    bool validPhone = await phoneAuthProvider.instantiate(
         dialCode: countryProvider.selectedCountry.dialCode,
         onCodeSent: () {
           Navigator.of(context).push(CupertinoPageRoute(
-              builder: (BuildContext context) => PhoneAuthVerify()));
+              builder: (BuildContext context) => PhoneAuthVerify(
+                    phoneNo: finalPhoneNo,
+                  )));
         },
         onFailed: () {
-          _showSnackBar(phoneAuthDataProvider.message);
+          _showSnackBar(phoneAuthProvider.message);
         },
         onError: () {
-          _showSnackBar(phoneAuthDataProvider.message);
+          _showSnackBar(phoneAuthProvider.message);
         });
     if (!validPhone) {
-      phoneAuthDataProvider.loading = false;
+      phoneAuthProvider.loading = false;
       _showSnackBar("Oops! Number seems invaild");
       return;
     }
