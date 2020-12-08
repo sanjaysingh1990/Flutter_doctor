@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/doctor/doctorpage.dart';
+import 'package:flutter_app_test/pages/auth/phone_auth/get_phone.dart';
+
 import 'package:flutter_app_test/providers/countries.dart';
 import 'package:flutter_app_test/providers/home_view_model.dart';
 import 'package:flutter_app_test/providers/phone_auth.dart';
 
 import 'package:provider/provider.dart';
 
-import 'auth/phone_auth/get_phone.dart';
+import 'pages/doctor/doctorpage.dart';
+
+
 
 
 
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: DoctorPage(),
+        home: PhoneAuthGetPhone(),
         debugShowCheckedModeBanner: false,
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show ChangeNotifier, VoidCallback;
 import 'package:flutter/widgets.dart' show TextEditingController;
-import 'package:flutter_app_test/auth/auth.dart';
+import 'package:flutter_app_test/pages/auth/auth.dart';
+
+
 
 
 
@@ -130,7 +132,7 @@ class PhoneAuthDataProvider with ChangeNotifier {
       });
     };
 
-    _addStatusMessage('Phone auth started');
+    _addStatusMessage('Phone pages.auth started');
     FireBase.auth
         .verifyPhoneNumber(
             phoneNumber: phone.toString(),

@@ -3,7 +3,7 @@ import 'dart:convert' show json;
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart' show TextEditingController, debugPrint;
-import 'package:flutter_app_test/data_models/country.dart';
+import 'package:flutter_app_test/model/country.dart';
 
 
 class CountryProvider with ChangeNotifier {

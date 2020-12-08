@@ -44,7 +44,7 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
   //for picking media
   PickedFile _imageFile;
   final scaffoldKey =
-      GlobalKey<ScaffoldState>(debugLabel: "doctor-details-page");
+      GlobalKey<ScaffoldState>(debugLabel: "pages.doctor-details-page");
 
   @override
   void initState() {

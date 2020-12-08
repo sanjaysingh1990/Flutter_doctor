@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/doctor/doctorpage.dart';
+import 'package:flutter_app_test/pages/doctor/doctorpage.dart';
+import 'package:flutter_app_test/pages/privacypolicy/webview_page.dart';
 
-import 'package:flutter_app_test/privacypolicy/webview_page.dart';
 import 'package:flutter_app_test/providers/phone_auth.dart';
 import 'package:flutter_app_test/utils/AppColors.dart';
 import 'package:flutter_app_test/utils/class%20ResString.dart';

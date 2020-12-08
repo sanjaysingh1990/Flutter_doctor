@@ -8,7 +8,7 @@ import 'package:flutter_app_test/utils/AppColors.dart';
 import 'package:flutter_app_test/utils/AssetStrings.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../data_models/country.dart';
+import '../model/country.dart';
 
 class PhoneAuthWidgets {
   static Widget getHeading({String text}) => Text(

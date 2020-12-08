@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/doctordetails/doctordetailspage.dart';
+
 import 'package:flutter_app_test/localdb/DatabaseHelper.dart';
 import 'package:flutter_app_test/model/apierror.dart';
 import 'package:flutter_app_test/model/doctorcontact.dart';
+import 'package:flutter_app_test/pages/doctordetails/doctordetailspage.dart';
 import 'package:flutter_app_test/providers/home_view_model.dart';
 import 'package:flutter_app_test/shimmer/notification_shimmer.dart';
 import 'package:flutter_app_test/utils/AppColors.dart';
@@ -23,7 +24,7 @@ class _DoctorPagePageState extends State<DoctorPage> {
   HomeViewModel _homeViewModel;
   var _doctorsList = List<DoctorContact>();
   final scaffoldKey =
-  GlobalKey<ScaffoldState>(debugLabel: "doctor-page");
+  GlobalKey<ScaffoldState>(debugLabel: "pages.doctor-page");
   @override
   void initState() {
     // TODO: implement initState

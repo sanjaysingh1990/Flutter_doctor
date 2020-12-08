@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/auth/phone_auth/verify.dart';
+import 'package:flutter_app_test/pages/auth/phone_auth/verify.dart';
+
 
 import 'package:flutter_app_test/providers/countries.dart';
 import 'package:flutter_app_test/providers/phone_auth.dart';
@@ -18,7 +19,7 @@ import 'select_country.dart';
  *  PhoneAuthUI - this file contains whole ui and controllers of ui
  *  Background code will be in other class
  *  This code can be easily re-usable with any other service type, as UI part and background handling are completely from different sources
- *  code.dart - Class to control background processes in phone auth verification using Firebase
+ *  code.dart - Class to control background processes in phone pages.auth verification using Firebase
  */
 
 class PhoneAuthGetPhone extends StatefulWidget {

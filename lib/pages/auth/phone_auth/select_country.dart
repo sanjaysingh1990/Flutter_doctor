@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/data_models/country.dart';
+import 'package:flutter_app_test/model/country.dart';
 import 'package:flutter_app_test/providers/countries.dart';
 import 'package:flutter_app_test/utils/widgets.dart';
 
